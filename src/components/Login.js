@@ -38,7 +38,7 @@ const Login = ({ setRole, setToken }) => {
           }
 
           input {
-            width: 100%;
+            width: 95%;
             padding: 12px;
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -62,6 +62,7 @@ const Login = ({ setRole, setToken }) => {
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
           }
 
           button:hover {
@@ -93,8 +94,14 @@ const Login = ({ setRole, setToken }) => {
       <form onSubmit={handleSubmit}>
         <input name="username" placeholder="Username" onChange={handleChange} required />
         <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+
+        <div className="forgot-password">
+        <a href="/forgot-password">Forgot Password?</a>
+      </div>
+
         <button type="submit">Login</button>
       </form>
+      
     </div>
   );
 };
