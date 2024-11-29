@@ -1,31 +1,25 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models"); // Assuming Sequelize is used and `User` is the model for your user table.
-
-// @desc   Authenticate user and generate a JWT token
-// @route  POST /api/auth/login
-// @access Public
+const { User } = require("../models");
 const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Find user by username
     const user = await User.findOne({ where: { username } });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Compare provided password with the hashed password in the database
+  
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate a JWT token with user ID and role
+  
     const token = jwt.sign(
-      { id: user.id, role: user.role }, // Payload
-      process.env.JWT_SECRET,          // Secret key
-      { expiresIn: "1h" }              // Token expiration
+      { id: user.id, role: user.role }, 
+      { expiresIn: "1h" }              
     );
 
     // Send token and role back to the client
