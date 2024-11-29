@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = ({ setRole, setToken }) => {
   const [formData, setFormData] = useState({ username: "", password: "" });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +15,7 @@ const Login = ({ setRole, setToken }) => {
       setRole(res.data.role);
       setToken(res.data.token);
     } catch (err) {
-      console.error(err.response.data.message);
+      console.error(err.response?.data?.message || "Login failed");
     }
   };
 
@@ -75,6 +77,10 @@ const Login = ({ setRole, setToken }) => {
             margin-bottom: 30px;
             font-size: 32px;
           }
+            
+          already-acc {
+            margin-top: 20px;
+          }
 
           @media (max-width: 768px) {
             form {
@@ -89,19 +95,29 @@ const Login = ({ setRole, setToken }) => {
           }
         `}
       </style>
-
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Username" onChange={handleChange} required />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-
-        <div className="forgot-password">
-        <a href="/forgot-password">Forgot Password?</a>
-      </div>
-
+        <input
+          name="username"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Login</button>
+        <div style={{ marginTop: "10px" }}>
+          <Link to="/register">Don't have an account? Register here.</Link>
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <Link to="/">Forgot Password ? </Link>
+        </div>
       </form>
-      
     </div>
   );
 };
